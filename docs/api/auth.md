@@ -12,7 +12,8 @@ Served by the `auth` role, except `/v1/me*` (served by `api`).
   "email": "ayesha@example.com",
   "name": "Ayesha Rahman",
   "nid": "1234567890",
-  "password": "correct-horse-battery"
+  "password": "correct-horse-battery",
+  "captcha_token": "0.Zm9vYmFy..."
 }
 ```
 
@@ -23,23 +24,29 @@ Served by the `auth` role, except `/v1/me*` (served by `api`).
 | `name` | Required, 1–100 characters |
 | `nid` | Optional, 10, 13 or 17 digits, one account per NID; stored only as an HMAC |
 | `password` | Required, at least 10 characters, not in the built-in list of breached passwords |
+| `captcha_token` | Required, Turnstile token (see [CAPTCHA](#captcha)) |
 
 Response: `{ "user_id": 13 }`. Validation problems give `422 VALIDATION_FAILED` with
 `details.fields`.
 
-When Turnstile is on, add `"captcha_token"` (see [CAPTCHA](#captcha)). The token is not part of the
-idempotency fingerprint, so a retry with the same `Idempotency-Key` sends a fresh token.
+`captcha_token` is not part of the idempotency fingerprint, so a retry with the same
+`Idempotency-Key` sends a fresh token.
 
 ## Login
 
 `POST /v1/auth/login` · `200 OK`
 
 ```json
-{ "login": "+8801711111111", "password": "correct-horse-battery", "device_id": "web-7f3c" }
+{
+  "login": "+8801711111111",
+  "password": "correct-horse-battery",
+  "device_id": "web-7f3c",
+  "captcha_token": "0.Zm9vYmFy..."
+}
 ```
 
 `login` is a phone number or an e-mail address. `device_id` ties the refresh-token family to a device.
-When Turnstile is on, add `"captcha_token"` (see [CAPTCHA](#captcha)).
+`captcha_token` is a Turnstile token (see [CAPTCHA](#captcha)).
 
 ```json
 {
@@ -53,7 +60,6 @@ When Turnstile is on, add `"captcha_token"` (see [CAPTCHA](#captcha)).
 ```
 
 Wrong credentials, unknown users and locked accounts all give the same `401 INVALID_CREDENTIALS`.
-Without Turnstile, five failed attempts on one account give `429 RATE_LIMITED` for 15 minutes.
 
 ## CAPTCHA
 
@@ -63,9 +69,8 @@ Without Turnstile, five failed attempts on one account give `429 RATE_LIMITED` f
 { "provider": "turnstile", "site_key": "0x4AAAAAAA..." }
 ```
 
-An empty object means CAPTCHA is off. Otherwise render a
-[Cloudflare Turnstile](https://developers.cloudflare.com/turnstile/) widget with `site_key` and send its
-token as `captcha_token` on register and login. Tokens are single-use and expire after 300 s. A
+Render a [Cloudflare Turnstile](https://developers.cloudflare.com/turnstile/) widget with `site_key`
+and send its token as `captcha_token` on register and login. Tokens are single-use and expire after 300 s. A
 missing or rejected token gives `403 CAPTCHA_INVALID` with `details.captcha_required: true`; if
 Cloudflare cannot be reached, `503 UNAVAILABLE`.
 
