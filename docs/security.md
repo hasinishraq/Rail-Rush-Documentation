@@ -45,10 +45,9 @@ prevention.
 
 ## Abuse and availability
 
-- Cloudflare Turnstile on register and login (when `TURNSTILE_SECRET_KEY` is set). The token is
-  verified server-side and is single-use; if Cloudflare cannot be reached the request fails with
-  `503 UNAVAILABLE` rather than skipping the check. Without Turnstile, five failed logins lock the
-  account for 15 minutes.
+- Cloudflare Turnstile on register and login. The token is verified server-side and is single-use;
+  if Cloudflare cannot be reached the request fails with `503 UNAVAILABLE` rather than skipping the
+  check.
 - Per-IP rate limits on register, login, refresh and search; per-user limits on seat clicks, holds,
   payments and OTP sends. See [API overview](api/index.md#rate-limits).
 - A 5-second cool-down after 10 `SEAT_TAKEN` answers in 60 s, against seat-sniping bots.

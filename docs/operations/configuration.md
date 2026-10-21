@@ -82,8 +82,8 @@ syntax (`250ms`, `2m`, `720h`). Defaults apply when a variable is unset.
 | `ARGON2_MEMORY_KIB` | `65536` | Argon2id memory |
 | `ARGON2_TIME` | `1` | Argon2id iterations |
 | `ARGON2_THREADS` | `2` | Argon2id parallelism |
-| `TURNSTILE_SITE_KEY` | empty | Cloudflare Turnstile site key, served to the web app by `GET /v1/auth/captcha` |
-| `TURNSTILE_SECRET_KEY` | empty | Turnstile secret; when set, register and login need a valid token. Empty switches Turnstile off |
+| `TURNSTILE_SITE_KEY` | **required for `auth`** | Cloudflare Turnstile site key, served to the web app by `GET /v1/auth/captcha` |
+| `TURNSTILE_SECRET_KEY` | **required for `auth`** | Turnstile secret used to verify the token that register and login require |
 
 ## Tickets
 
@@ -123,7 +123,7 @@ variable is empty. See [Configure secrets](../getting-started/local-setup.md#1-c
 | `OTP_KEY`, `NID_KEY` | Yes | App |
 | `INTERNAL_TOKEN` | Yes | App |
 | `OTP_DEV_CODE` | No | App |
-| `TURNSTILE_SITE_KEY`, `TURNSTILE_SECRET_KEY` | No | App |
+| `TURNSTILE_SITE_KEY`, `TURNSTILE_SECRET_KEY` | Yes | App |
 
 ### Overrides
 
