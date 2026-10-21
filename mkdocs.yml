@@ -1,0 +1,106 @@
+site_name: RailRush
+site_description: Architecture, API and operations documentation for the Bangladesh Railway seat booking system.
+site_url: https://hasinishraq.github.io/Rail-Rush-Documentation/
+repo_url: https://github.com/hasinishraq/Rail-Rush-Documentation
+docs_dir: docs
+site_dir: site
+strict: true
+validation:
+  links:
+    anchors: warn   # with strict: a link to a missing #section fails the build
+
+theme:
+  name: material
+  language: en
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: custom
+      accent: custom
+      toggle:
+        icon: material/weather-night
+        name: Switch to dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: custom
+      accent: custom
+      toggle:
+        icon: material/weather-sunny
+        name: Switch to light mode
+  font:
+    text: Inter
+    code: JetBrains Mono
+  icon:
+    logo: material/train
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - navigation.top
+    - navigation.indexes
+    - navigation.footer
+    - toc.follow
+    - search.suggest
+    - search.highlight
+    - content.code.copy
+    - content.tabs.link
+
+extra_css:
+  - stylesheets/extra.css
+
+markdown_extensions:
+  - admonition
+  - attr_list
+  - def_list
+  - footnotes
+  - md_in_html
+  - tables
+  - toc:
+      permalink: true
+  - pymdownx.details
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+
+nav:
+  - Home: index.md
+  - Getting started:
+      - getting-started/index.md
+      - Run locally: getting-started/local-setup.md
+      - Test data and tools: getting-started/test-data.md
+  - Architecture:
+      - architecture/index.md
+      - Components and roles: architecture/components.md
+      - Booking flow: architecture/booking-flow.md
+      - Seat allocator: architecture/allocator.md
+      - Real-time seat map: architecture/realtime.md
+      - Messaging (Kafka): architecture/messaging.md
+      - Data model (Postgres): architecture/data-model.md
+      - Redis keys: architecture/redis.md
+      - Web app: architecture/frontend.md
+  - API reference:
+      - api/index.md
+      - Authentication: api/auth.md
+      - Search and journeys: api/search.md
+      - Waiting room and seat selection: api/selection.md
+      - Holds and OTP: api/holds.md
+      - Payments: api/payments.md
+      - Bookings and tickets: api/bookings.md
+      - Internal endpoints: api/internal.md
+      - Error codes: api/errors.md
+  - Security: security.md
+  - Operations:
+      - operations/index.md
+      - Configuration: operations/configuration.md
+      - Docker deployment: operations/deployment.md
+      - Observability: operations/observability.md
+      - Troubleshooting: operations/troubleshooting.md
+  - Business rules: business-rules.md
+  - Glossary: glossary.md

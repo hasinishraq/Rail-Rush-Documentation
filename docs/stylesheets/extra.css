@@ -1,0 +1,30 @@
+/* The web app's livery (web/src/styles.css): green with a red band. */
+:root,
+[data-md-color-scheme="default"] {
+  --md-primary-fg-color: #0b6b4f;
+  --md-primary-fg-color--light: #138a5b;
+  --md-primary-fg-color--dark: #063d2e;
+  --md-accent-fg-color: #e0402f;
+  --md-typeset-a-color: #0b6b4f;
+}
+
+[data-md-color-scheme="slate"] {
+  --md-primary-fg-color: #0b6b4f;
+  --md-primary-fg-color--light: #138a5b;
+  --md-primary-fg-color--dark: #04261d;
+  --md-accent-fg-color: #ff6b5a;
+  --md-typeset-a-color: #5cc79a;
+}
+
+/* The red band under the header, as in the app. */
+.md-header {
+  box-shadow: inset 0 -3px 0 #e0402f;
+}
+
+/* Wide reference tables: keep them readable. */
+.md-typeset table:not([class]) {
+  font-size: 0.72rem;
+}
+.md-typeset table:not([class]) code {
+  white-space: nowrap;
+}
